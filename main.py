@@ -49,9 +49,14 @@ if response.status_code != 200:
 # Filter out the cards in the "DONE" list
 cards = response.json()
 if done_list_id:
+    totalCards = [card for card in cards]
     cards = [card for card in cards if card['idList'] != done_list_id]
 
 # Count the number of cards that are not in the "DONE" list
 num_cards = len(cards)
 print(f'Number of cards not in the "{LIST_NAME}" list: {num_cards}')
 
+percent_done = round((len(totalCards) - len(cards)) / len(totalCards) * 100, 1)
+
+# Print the percentage of cards that are not in the "DONE" list
+print(f'{percent_done}% of the cards are not in the "{LIST_NAME}" list')
